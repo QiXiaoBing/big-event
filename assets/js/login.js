@@ -62,7 +62,7 @@ $('#login form').on('submit', function(e) {
     var data = $(this).serialize();
     $.ajax({
         type: 'POST',
-        url: 'http://ajax.frontend.itheima.net/api/login',
+        url: '/api/login',
         data: data,
         success: function(res) {
             //无论登录成功还是失败，给出提示

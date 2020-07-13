@@ -12,7 +12,7 @@ $('#register form').on('submit', function(e) {
     var data = $(this).serialize();
     $.ajax({
         type: 'POST',
-        url: 'http://www.liulongbin.top:3007/api/reguser',
+        url: 'http://ajax.frontend.itheima.net/api/reguser',
         data: data,
         success: function(res) {
             // 无论注册成功还是失败，都给提示
@@ -47,9 +47,26 @@ form.verify({
     same: function(val) {
         // 这个验证规则，重复密码使用；所以val表示重复密码
         // 获取密码
-        var pwd = $('input[name=password]').val();
+        var pwd = $('#register input[name=password]').val();
         if (pwd !== val) {
             return '两次密码不一致';
         }
     }
+});
+// -----------------------  登录功能 ----------------------
+$('#login form').on('submit', function(e) {
+    e.preventDefault();
+    var data = $(this).serialize();
+    $.ajax({
+        type: 'POST',
+        url: 'http://ajax.frontend.itheima.net/api/login',
+        data: data,
+        success: function(res) {
+            layer.msg(res.message);
+            if (res.status === 0) {
+                localStorage.setItem('token', res.token)
+                location.href = '/index.html'
+            }
+        }
+    })
 })

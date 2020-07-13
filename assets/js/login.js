@@ -54,17 +54,24 @@ form.verify({
     }
 });
 // -----------------------  登录功能 ----------------------
+//监听表单的提交事件》阻止默认行为》收集表单数据》ajax提交给接口
 $('#login form').on('submit', function(e) {
     e.preventDefault();
+    //做到这一步，必须检查input得name属性住
+    //检查input得那么属性，是否和接口要求得请求参数名一致，必须一致
     var data = $(this).serialize();
     $.ajax({
         type: 'POST',
         url: 'http://ajax.frontend.itheima.net/api/login',
         data: data,
         success: function(res) {
+            //无论登录成功还是失败，给出提示
             layer.msg(res.message);
             if (res.status === 0) {
+                //把token保存到本地存储中
                 localStorage.setItem('token', res.token)
+                    //登录成功，跳转到首页
+                    //表示跳转到根目录中得index.html
                 location.href = '/index.html'
             }
         }
